@@ -6,6 +6,7 @@
   "private": true,
   "dependencies": {
     "@angular/animations": "~19.1.0",
+    "@angular/cdk": "^19.2.1",
     "@angular/common": "~19.1.0",
     "@angular/compiler": "~19.1.0",
     "@angular/core": "~19.1.0",
@@ -19,6 +20,7 @@
     "@ngrx/operators": "^19.0.1",
     "@ngrx/router-store": "^19.0.0",
     "@ngrx/store": "^19.0.0",
+    "@spartan-ng/brain": "^0.0.1-alpha.414",
     "axios": "^1.6.0",
     "express": "^4.21.2",
     "rxjs": "~7.8.0",
@@ -47,6 +49,7 @@
     "@nx/workspace": "20.4.6",
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
     "@schematics/angular": "~19.1.0",
+    "@spartan-ng/cli": "^0.0.1-alpha.414",
     "@svgr/webpack": "^8.0.1",
     "@swc-node/register": "~1.9.1",
     "@swc/core": "~1.5.7",
