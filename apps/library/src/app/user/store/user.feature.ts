@@ -22,6 +22,9 @@ export const userFeature = createFeature({
   name: 'User',
   reducer: createReducer(
     initialState,
+    on(UserActions.resetUser, () => ({
+      ...initialState,
+    })),
     on(UserActions.loadUserSuccess, (state, { user }) => ({
       ...state,
       user,

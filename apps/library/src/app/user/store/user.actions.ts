@@ -4,6 +4,7 @@ import { User } from "./user.feature";
 export const UserActions = createActionGroup({
   source: 'User',
   events: {
+    resetUser: emptyProps(),
     loadUser: emptyProps(),
     loadUserSuccess: props<{ user: User }>(),
     addFavorite: props<{ bookId: string }>(),
