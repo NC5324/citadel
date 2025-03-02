@@ -1,1 +1,24 @@
-<p>home works!</p>
+<div
+  class="w-full h-full flex flex-col items-center justify-center space-y-2 p-8"
+>
+  <div class="flex flex-col items-center justify-center space-y-2">
+    <h1 class="text-6xl md:text-9xl">Citadel</h1>
+    <h2 class="text-xl md:text-3xl">A Library Of Ice And Fire</h2>
+  </div>
+  <div
+    class="w-full md:max-w-[40%] flex items-center bg-accent text-accent-foreground space-x-2 pl-3 p-2 rounded-sm"
+  >
+    <ng-icon hlm size="sm" name="lucideSearch" />
+    <input
+      class="outline-none flex-grow"
+      placeholder="Search for your favorite book"
+      [(ngModel)]="searchQuery"
+    />
+    <button
+      class="cursor-pointer bg-background/90 text-foreground not-dark:bg-accent-foreground not-dark:text-accent py-1 px-2 ml-auto rounded-sm text-sm"
+      (click)="search(searchQuery)"
+    >
+      Search
+    </button>
+  </div>
+</div>

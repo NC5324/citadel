@@ -5,8 +5,10 @@ import {
   inject,
   PLATFORM_ID,
   RendererFactory2,
+  signal,
 } from '@angular/core';
 import { ReplaySubject, Subject, takeUntil } from 'rxjs';
+import { toObservable } from '@angular/core/rxjs-interop';
 
 @Injectable({
   providedIn: 'root',
@@ -26,10 +28,8 @@ export class ThemeService implements OnDestroy {
   // B. Initializing our in memory theme store
   // B.1 we want to give every subscriber the current value of our theme
   // even if they subscribe after the first value was emitted
-  private _theme$ = new ReplaySubject<'light' | 'dark'>(1);
-  // B.2 we expose the current theme so our app can access it and e.g. show
-  // a different icon for the button to toggle it
-  public theme$ = this._theme$.asObservable();
+  readonly theme = signal<'light' | 'dark'>('dark');
+
   // B.3 this emits when the service is destroyed and used to clean up subscriptions
   private _destroyed$ = new Subject<void>();
 
@@ -48,7 +48,7 @@ export class ThemeService implements OnDestroy {
     // if we are in the browser we know we have access to localstorage
     if (isPlatformBrowser(this._platformId)) {
       // we load the appropriate value from the localStorage into our _theme$ replaysubject
-      this._theme$.next(
+      this.theme.set(
         localStorage.getItem('theme') === 'dark' ? 'dark' : 'light'
       );
     }
@@ -57,7 +57,7 @@ export class ThemeService implements OnDestroy {
   // and add/remove class from html element
   private toggleClassOnThemeChanges(): void {
     // until our service is destroyed we subscribe to all changes in the theme$ variable
-    this.theme$.pipe(takeUntil(this._destroyed$)).subscribe((theme) => {
+    toObservable(this.theme).pipe(takeUntil(this._destroyed$)).subscribe((theme) => {
       // if it is dark we add the dark class to the html element
       if (theme === 'dark') {
         this._renderer.addClass(this._document.documentElement, 'dark');
@@ -75,7 +75,7 @@ export class ThemeService implements OnDestroy {
     const newTheme =
       localStorage.getItem('theme') === 'dark' ? 'light' : 'dark';
     localStorage.setItem('theme', newTheme);
-    this._theme$.next(newTheme);
+    this.theme.set(newTheme);
   }
 
   // E. Clean up our subscriptions when the service gets destroyed

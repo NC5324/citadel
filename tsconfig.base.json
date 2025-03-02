@@ -21,8 +21,17 @@
       "@citadel/models": [
         "libs/shared/models/src/index.ts"
       ],
+      "@spartan-ng/ui-button-helm": [
+        "libs/shared/ui/ui-button-helm/src/index.ts"
+      ],
       "@spartan-ng/ui-icon-helm": [
         "libs/shared/ui/ui-icon-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-input-helm": [
+        "libs/shared/ui/ui-input-helm/src/index.ts"
+      ],
+      "@spartan-ng/ui-formfield-helm": [
+        "libs/shared/ui/ui-formfield-helm/src/index.ts"
       ]
     }
   },
