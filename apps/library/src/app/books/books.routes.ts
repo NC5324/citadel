@@ -2,7 +2,7 @@ import { Route } from "@angular/router";
 import { provideState } from "@ngrx/store";
 import { booksFeature } from "./store/books.feature";
 
-export const routes: Route[] = [
+export const bookRoutes: Route[] = [
     {
         path: '',
         loadComponent: () => import('./book-list/book-list.component').then((c) => c.BookListComponent),
