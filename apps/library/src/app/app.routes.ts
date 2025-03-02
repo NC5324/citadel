@@ -6,7 +6,7 @@ import { userRoutes } from './user/user.routes';
 export const appRoutes: Route[] = [
     {
         path: '',
-        loadComponent: undefined,
+        loadComponent: () => import('./home/home.component').then((m) => m.HomeComponent),
     },
     {
         path: 'user',

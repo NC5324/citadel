@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { ThemeService } from './services/theme.service';
 
 @Component({
   imports: [RouterModule],
@@ -10,4 +11,9 @@ import { RouterModule } from '@angular/router';
 })
 export class AppComponent {
   title = 'library';
+  themeService = inject(ThemeService);
+
+  toggleTheme(): void {
+    this.themeService.toggleDarkMode();
+  }
 }
