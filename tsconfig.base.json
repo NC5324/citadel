@@ -15,8 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@citadel/models": ["libs/shared/models/src/index.ts"],
-      "@citadel/ui": ["libs/shared/ui/src/index.ts"]
+      "@citadel/models": ["libs/shared/models/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
