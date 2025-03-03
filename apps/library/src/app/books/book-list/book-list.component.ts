@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
+  HostListener,
   inject,
   OnInit,
   signal,
@@ -60,6 +61,11 @@ export class BookListComponent implements OnInit {
     this.search(this.searchQuery());
   }
 
+  @HostListener('window:keydown.enter')
+  handleKeyDown() {
+    this.search(this.searchQuery());
+  }
+
   bookTags(book: Book): string[] {
     let tags = book.subject?.filter((s) => this.subjectRegex.test(s))?.slice(0, 5) ?? [];
     if (!tags.length) {
@@ -77,7 +83,9 @@ export class BookListComponent implements OnInit {
   }
 
   search(query: string): void {
-    this.store.dispatch(BooksActions.search({ query }));
+    if (query) {
+      this.store.dispatch(BooksActions.search({ query }));
+    }
   }
 
   showMore(query: string): void {

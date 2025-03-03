@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostListener, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
@@ -20,12 +20,19 @@ export class HomeComponent {
 	private readonly router = inject(Router);
 	public searchQuery = '';
 
+	@HostListener('window:keydown.enter')
+	handleKeyDown() {
+	this.search(this.searchQuery);
+	}
+
 	search(query: string): void {
-		this.searchQuery = '';
-		this.router.navigateByUrl('/books', {
-			state: {
-				search: query,
-			},
-		});
+		if (query) {
+			this.searchQuery = '';
+			this.router.navigateByUrl('/books', {
+				state: {
+					search: query,
+				},
+			});
+		}
 	}
 }
