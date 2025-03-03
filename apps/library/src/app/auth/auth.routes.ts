@@ -3,6 +3,7 @@ import { provideEffects } from "@ngrx/effects";
 import { AuthEffects } from "./store/auth.effects";
 import { provideState } from "@ngrx/store";
 import { userFeature } from "../user/store/user.feature";
+import { UserEffects } from "../user/store/user.effects";
 
 export const authRoutes: Route[] = [
     {
@@ -11,6 +12,7 @@ export const authRoutes: Route[] = [
         providers: [
             provideState(userFeature),
             provideEffects(AuthEffects),
+            provideEffects(UserEffects),
         ],
     },
     {

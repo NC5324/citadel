@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, EventEmitter, HostListener, inject, input, model, OnInit, Output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, input, model, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -37,6 +37,7 @@ export class LibBookListComponent {
   readonly favoriteIds = input<string[]>();
   readonly searchQuery = model<string>('');
   readonly disableSearch = input<boolean>();
+  readonly disableEmpty = input<boolean>();
 
   @Output()
   readonly showMore = new EventEmitter();
