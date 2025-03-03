@@ -5,12 +5,12 @@ import { BooksActions } from '../../books/store/books.actions';
 import { Book } from '../../books/store/books.feature';
 import { UserActions } from '../store/user.actions';
 import { userFeature } from '../store/user.feature';
-import { LibBookListComponent } from '@citadel/books';
+import { BookListComponent } from '@citadel/books';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-favorites-list',
-  imports: [CommonModule, LibBookListComponent],
+  imports: [CommonModule, BookListComponent],
   templateUrl: './favorites-list.component.html',
   styleUrl: './favorites-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

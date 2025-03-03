@@ -30,7 +30,7 @@ import { Book } from '../../../../../apps/library/src/app/books/store/books.feat
   styleUrl: './book-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LibBookListComponent {
+export class BookListComponent {
 
   readonly books = input<Book[]>();
   readonly hasMore = input<boolean>();
