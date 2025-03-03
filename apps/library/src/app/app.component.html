@@ -6,9 +6,11 @@
         <div class="mt-[-4px]">Citadel</div>
       </button>
     </div>
-    <div class="flex items-center ml-auto space-x-2">
-      <button hlmBtn variant="link" routerLink="/auth/login">Login</button>
-      <button hlmBtn variant="link" routerLink="/auth/signup">Signup</button>
+    <div class="flex items-center ml-auto">
+      <button hlmBtn variant="link" routerLink="/user/favorites">
+        <ng-icon hlm class="mr-2" size="sm" name="lucideHeart" />
+        My favorites
+      </button>
       <button hlmBtn size="icon" variant="ghost" (click)="toggleTheme()">
         @if (themeService.theme() === 'dark') {
         <ng-icon hlm size="sm" name="lucideSun" />
@@ -18,7 +20,7 @@
       </button>
     </div>
   </div>
-  <div class="flex flex-col flex-grow">
+  <div class="flex flex-col flex-grow overflow-x-hidden overflow-y-auto">
     <router-outlet></router-outlet>
   </div>
 </div>

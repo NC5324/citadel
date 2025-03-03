@@ -17,13 +17,15 @@ import { FormsModule } from '@angular/forms';
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent {
-	private readonly store = inject(Store);
 	private readonly router = inject(Router);
 	public searchQuery = '';
 
 	search(query: string): void {
-		this.store.dispatch(BooksActions.search({ query }));
-		this.router.navigateByUrl('/books');
 		this.searchQuery = '';
+		this.router.navigateByUrl('/books', {
+			state: {
+				search: query,
+			},
+		});
 	}
 }

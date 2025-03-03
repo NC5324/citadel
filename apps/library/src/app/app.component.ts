@@ -4,11 +4,11 @@ import { ThemeService } from './services/theme.service';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideBook, lucideMoon, lucideSun } from '@ng-icons/lucide';
+import { lucideBook, lucideHeart, lucideMoon, lucideSun } from '@ng-icons/lucide';
 
 @Component({
   imports: [RouterModule, HlmButtonDirective, NgIcon, HlmIconDirective],
-  providers: [provideIcons({ lucideBook, lucideSun, lucideMoon })],
+  providers: [provideIcons({ lucideBook, lucideHeart, lucideSun, lucideMoon })],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
