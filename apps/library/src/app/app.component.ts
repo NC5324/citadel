@@ -8,7 +8,6 @@ import { lucideBook, lucideHeart, lucideLogIn, lucideLogOut, lucideMoon, lucideS
 import { Store } from '@ngrx/store';
 import { userFeature } from './user/store/user.feature';
 import { map } from 'rxjs';
-import { AuthActions } from './auth/store/auth.actions';
 import { AsyncPipe } from '@angular/common';
 import { UserActions } from './user/store/user.actions';
 
