@@ -5,7 +5,6 @@ import { Book } from '../../books/store/books.feature';
 export interface User {
   id: number;
   username: string;
-  email: string;
   favorites: string[];
 }
 

@@ -48,7 +48,13 @@ export class BookDetailsComponent {
   );
 
   description(book: Book): string {
-    return typeof book.description === 'string' ? book.description : book.description.value;
+    if (!book.description) {
+      return '';
+    }
+    if (typeof book.description === 'string') {
+      return book.description;
+    }
+    return book.description.value;
   }
 
   isFavorite(bookId: string, favorites: string[] | undefined): boolean {

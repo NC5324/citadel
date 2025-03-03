@@ -18,6 +18,11 @@
         <ng-icon hlm size="sm" name="lucideMoon" />
         }
       </button>
+      @if (authenticated$ | async) {
+      <button hlmBtn size="icon" variant="ghost" (click)="logout()">
+        <ng-icon hlm size="sm" name="lucideLogOut" />
+      </button>
+      }
     </div>
   </div>
   <div class="flex flex-col flex-grow overflow-x-hidden overflow-y-auto">
