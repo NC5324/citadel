@@ -35,7 +35,9 @@
         <div class="flex flex-col">
           <h3 hlmCardTitle>{{ book.title }} - {{ book.first_publish_year }}</h3>
           @if (book.author_name) {
-          <p hlmCardDescription>by {{ book.author_name.slice(0, 3).join(', ') }}</p>
+          <p hlmCardDescription>
+            by {{ book.author_name.slice(0, 3).join(', ') }}
+          </p>
           }
           <div class="flex flex-wrap gap-2 mt-2 max-h-[100px] overflow-y-auto">
             @for (subject of bookTags(book); track subject) {
@@ -45,11 +47,33 @@
         </div>
       </header>
       <footer hlmCardFooter class="justify-between gap-1 mt-auto">
-        <button hlmBtn class="w-full" variant="destructive">
+        @if (isFavorite(bookId(book), favorites())) {
+        <button
+          hlmBtn
+          class="w-full"
+          variant="destructive"
+          (click)="removeFavorite(bookId(book))"
+        >
+          <ng-icon hlm size="sm" class="mr-2" name="lucideHeartCrack" />
+          Remove from favorites
+        </button>
+        } @else {
+        <button
+          hlmBtn
+          class="w-full"
+          variant="destructive"
+          (click)="addFavorite(bookId(book))"
+        >
           <ng-icon hlm size="sm" class="mr-2" name="lucideHeart" />
           Add to favorites
         </button>
-        <button hlmBtn class="w-full" variant="secondary" [routerLink]="['.', bookId(book)]">
+        }
+        <button
+          hlmBtn
+          class="w-full"
+          variant="secondary"
+          [routerLink]="['.', bookId(book)]"
+        >
           <ng-icon hlm size="sm" class="mr-2" name="lucideEye" />
           View details
         </button>

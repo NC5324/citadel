@@ -29,6 +29,16 @@ export const userFeature = createFeature({
       ...state,
       user,
     })),
+    // temp
+    on(UserActions.addFavorite, (state, { bookId }) => ({
+      ...state,
+      favorites: state.favorites.filter((favorite) => favorite !== bookId).concat(bookId),
+    })),
+    // temp
+    on(UserActions.removeFavorite, (state, { bookId }) => ({
+      ...state,
+      favorites: state.favorites.filter((favorite) => favorite !== bookId),
+    })),
     on(
       UserActions.addFavoriteSuccess,
       UserActions.removeFavoriteSuccess,

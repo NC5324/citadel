@@ -7,12 +7,12 @@ import {
   OnInit,
   signal,
 } from '@angular/core';
-import { CommonModule, JsonPipe, Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { FormsModule } from '@angular/forms';
 import { NgIcon, provideIcons } from '@ng-icons/core';
 import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
-import { lucideEye, lucideHeart, lucideSearch } from '@ng-icons/lucide';
+import { lucideEye, lucideHeart, lucideHeartCrack, lucideSearch } from '@ng-icons/lucide';
 import { Book, booksFeature } from '../store/books.feature';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { BooksActions } from '../store/books.actions';
@@ -23,6 +23,8 @@ import { HlmCardDescriptionDirective } from '../../../../../../libs/shared/ui/ui
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmBadgeDirective } from '../../../../../../libs/shared/ui/ui-badge-helm/src/lib/hlm-badge.directive';
 import { RouterModule } from '@angular/router';
+import { UserActions } from '../../user/store/user.actions';
+import { userFeature } from '../../user/store/user.feature';
 
 @Component({
   selector: 'app-book-list',
@@ -39,7 +41,7 @@ import { RouterModule } from '@angular/router';
     HlmCardFooterDirective,
     HlmBadgeDirective,
   ],
-  providers: [provideIcons({ lucideSearch, lucideHeart, lucideEye })],
+  providers: [provideIcons({ lucideSearch, lucideHeart, lucideHeartCrack, lucideEye })],
   templateUrl: './book-list.component.html',
   styleUrl: './book-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -54,6 +56,7 @@ export class BookListComponent implements OnInit {
 
   readonly books = toSignal(this.store.select(booksFeature.selectBooks));
   readonly hasMore = toSignal(this.store.select(booksFeature.selectHasMore));
+  readonly favorites = toSignal(this.store.select(userFeature.selectFavorites));
 
   ngOnInit(): void {
     const { search } = this.location.getState() as { search?: string };
@@ -86,6 +89,18 @@ export class BookListComponent implements OnInit {
     if (query) {
       this.store.dispatch(BooksActions.search({ query }));
     }
+  }
+
+  isFavorite(bookId: string, favorites: string[] | undefined): boolean {
+    return !!favorites?.includes(bookId);
+  }
+
+  addFavorite(bookId: string): void {
+    this.store.dispatch(UserActions.addFavorite({ bookId }));
+  }
+
+  removeFavorite(bookId: string): void {
+    this.store.dispatch(UserActions.removeFavorite({ bookId }));
   }
 
   showMore(query: string): void {

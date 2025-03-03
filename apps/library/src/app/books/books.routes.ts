@@ -3,6 +3,8 @@ import { provideState } from "@ngrx/store";
 import { booksFeature } from "./store/books.feature";
 import { provideEffects } from "@ngrx/effects";
 import { BooksEffects } from "./store/books.effects";
+import { UserEffects } from "../user/store/user.effects";
+import { userFeature } from "../user/store/user.feature";
 
 export const bookRoutes: Route[] = [
     {
@@ -11,6 +13,8 @@ export const bookRoutes: Route[] = [
         providers: [
             provideState(booksFeature),
             provideEffects(BooksEffects),
+            provideState(userFeature),
+            provideEffects(UserEffects),
         ],
     },
     {
