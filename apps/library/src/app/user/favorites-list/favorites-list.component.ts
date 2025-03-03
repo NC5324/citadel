@@ -1,15 +1,16 @@
 import { ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { toSignal } from '@angular/core/rxjs-interop';
 import { Store } from '@ngrx/store';
 import { BooksActions } from '../../books/store/books.actions';
-import { booksFeature, Book } from '../../books/store/books.feature';
+import { Book } from '../../books/store/books.feature';
 import { UserActions } from '../store/user.actions';
 import { userFeature } from '../store/user.feature';
+import { LibBookListComponent } from '@citadel/books';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-favorites-list',
-  imports: [CommonModule],
+  imports: [CommonModule, LibBookListComponent],
   templateUrl: './favorites-list.component.html',
   styleUrl: './favorites-list.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -18,14 +19,15 @@ export class FavoritesListComponent {
   readonly store = inject(Store);
   readonly destroyRef = inject(DestroyRef);
 
-  readonly searchQuery = signal('');
+  readonly searchQuery = '';
   private readonly subjectRegex = /^[A-Za-z]+$/g;
 
   readonly favorites = toSignal(this.store.select(userFeature.selectFavorites));
+  readonly favoriteIds = toSignal(this.store.select(userFeature.selectFavoriteIds));
 
   @HostListener('window:keydown.enter')
   handleKeyDown() {
-    this.search(this.searchQuery());
+    this.search(this.searchQuery);
   }
 
   bookTags(book: Book): string[] {
@@ -54,12 +56,12 @@ export class FavoritesListComponent {
     return !!favorites?.includes(bookId);
   }
 
-  addFavorite(bookId: string): void {
-    this.store.dispatch(UserActions.addFavorite({ bookId }));
+  addFavorite(book: Book): void {
+    this.store.dispatch(UserActions.addFavorite({ book }));
   }
 
-  removeFavorite(bookId: string): void {
-    this.store.dispatch(UserActions.removeFavorite({ bookId }));
+  removeFavorite(book: Book): void {
+    this.store.dispatch(UserActions.removeFavorite({ book }));
   }
 
   showMore(query: string): void {

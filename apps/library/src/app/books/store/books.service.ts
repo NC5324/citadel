@@ -12,7 +12,6 @@ export interface OpenLibrarySearchResponse {
 @Injectable({ providedIn: 'root' })
 export class BooksService {
   private readonly http = inject(HttpClient);
-  private readonly apiUrl = 'https://openlibrary.org/search.json';
 
   searchBooks$(
     query: string,
@@ -20,7 +19,7 @@ export class BooksService {
     pageSize: number
   ): Observable<OpenLibrarySearchResponse> {
     return this.http
-      .get<OpenLibrarySearchResponse>(this.apiUrl, {
+      .get<OpenLibrarySearchResponse>('https://openlibrary.org/search.json', {
         params: {
           mode: 'everything',
           language: 'eng',
@@ -31,4 +30,9 @@ export class BooksService {
         },
       });
   }
+
+  loadBook$(id: string): Observable<Book> {
+    return this.http.get<Book>(`https://openlibrary.org/works/${id}.json`)
+  }
+
 }

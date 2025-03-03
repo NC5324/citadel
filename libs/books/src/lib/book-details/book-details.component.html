@@ -1,0 +1,33 @@
+@if (book$ | async; as book) {
+<section hlmCard class="flex flex-col m-4">
+  <header hlmCardHeader class="flex flex-row space-x-4">
+    <img
+      class="w-[400px] h-[650px] bg-accent rounded-xs"
+      [src]="'https://covers.openlibrary.org/b/id/' + book.covers[0] + '-L.jpg'"
+      [alt]="book.title + ' cover'"
+    />
+    <div class="flex flex-col">
+      <h3 hlmCardTitle>{{ book.title }}</h3>
+      <p hlmCardDescription>{{ description(book) }}</p>
+      <div class="flex flex-wrap gap-2 mt-2">
+        @for (subject of book.subjects; track subject) {
+        <div hlmBadge variant="secondary">{{ subject }}</div>
+        }
+      </div>
+      <div class="mt-4">
+        @if (isFavorite(book.key, favoriteIds())) {
+        <button hlmBtn variant="destructive" (click)="removeFavorite(book)">
+          <ng-icon hlm size="sm" class="mr-2" name="lucideHeartCrack" />
+          Remove from favorites
+        </button>
+        } @else {
+        <button hlmBtn variant="destructive" (click)="addFavorite(book)">
+          <ng-icon hlm size="sm" class="mr-2" name="lucideHeart" />
+          Add to favorites
+        </button>
+        }
+      </div>
+    </div>
+  </header>
+</section>
+}

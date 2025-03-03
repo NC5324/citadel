@@ -19,6 +19,6 @@ export const bookRoutes: Route[] = [
     },
     {
         path: ':id',
-        loadComponent: () => import('./book-details/book-details.component').then((c) => c.BookDetailsComponent),
+        loadComponent: () => import('libs/books/src/lib/book-details/book-details.component').then((c) => c.BookDetailsComponent),
     },
 ]

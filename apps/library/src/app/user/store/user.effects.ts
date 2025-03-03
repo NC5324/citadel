@@ -29,8 +29,8 @@ export class UserEffects {
             concatLatestFrom(() => this.store.select(userFeature.selectUser).pipe(
                 filter((user) => !!user),
             )),
-            exhaustMap(([{ bookId }, user]) => this.userService.addFavorite$(user.id, bookId).pipe(
-                map((favorites) => UserActions.addFavoriteSuccess({ favorites })),
+            exhaustMap(([{ book }, user]) => this.userService.addFavorite$(user.id, book.key).pipe(
+                map((favoriteIds) => UserActions.addFavoriteSuccess({ favoriteIds })),
                 catchError(() => EMPTY),
             )),
         );
@@ -42,8 +42,8 @@ export class UserEffects {
             concatLatestFrom(() => this.store.select(userFeature.selectUser).pipe(
                 filter((user) => !!user),
             )),
-            exhaustMap(([{ bookId }, user]) => this.userService.removeFavorite$(user.id, bookId).pipe(
-                map((favorites) => UserActions.removeFavoriteSuccess({ favorites })),
+            exhaustMap(([{ book }, user]) => this.userService.removeFavorite$(user.id, book.key).pipe(
+                map((favoriteIds) => UserActions.removeFavoriteSuccess({ favoriteIds })),
                 catchError(() => EMPTY),
             )),
         );

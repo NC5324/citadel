@@ -10,39 +10,26 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@citadel/models": [
-        "libs/shared/models/src/index.ts"
+      "@citadel/books": ["libs/books/src/index.ts"],
+      "@citadel/models": ["libs/shared/models/src/index.ts"],
+      "@spartan-ng/ui-badge-helm": [
+        "libs/shared/ui/ui-badge-helm/src/index.ts"
       ],
       "@spartan-ng/ui-button-helm": [
         "libs/shared/ui/ui-button-helm/src/index.ts"
       ],
-      "@spartan-ng/ui-icon-helm": [
-        "libs/shared/ui/ui-icon-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-input-helm": [
-        "libs/shared/ui/ui-input-helm/src/index.ts"
-      ],
+      "@spartan-ng/ui-card-helm": ["libs/shared/ui/ui-card-helm/src/index.ts"],
       "@spartan-ng/ui-formfield-helm": [
         "libs/shared/ui/ui-formfield-helm/src/index.ts"
       ],
-      "@spartan-ng/ui-card-helm": [
-        "libs/shared/ui/ui-card-helm/src/index.ts"
-      ],
-      "@spartan-ng/ui-badge-helm": [
-        "libs/shared/ui/ui-badge-helm/src/index.ts"
-      ]
+      "@spartan-ng/ui-icon-helm": ["libs/shared/ui/ui-icon-helm/src/index.ts"],
+      "@spartan-ng/ui-input-helm": ["libs/shared/ui/ui-input-helm/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }

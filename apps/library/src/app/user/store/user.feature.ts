@@ -1,5 +1,6 @@
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { UserActions } from './user.actions';
+import { Book } from '../../books/store/books.feature';
 
 export interface User {
   id: number;
@@ -10,11 +11,13 @@ export interface User {
 
 export interface State {
   user: User | null;
-  favorites: string[];
+  favoriteIds: string[];
+  favorites: Book[];
 }
 
 const initialState: State = {
   user: null,
+  favoriteIds: [],
   favorites: [],
 };
 
@@ -30,21 +33,31 @@ export const userFeature = createFeature({
       user,
     })),
     // temp
-    on(UserActions.addFavorite, (state, { bookId }) => ({
+    on(UserActions.addFavorite, (state, { book }) => ({
       ...state,
-      favorites: state.favorites.filter((favorite) => favorite !== bookId).concat(bookId),
+      favoriteIds: state.favoriteIds
+        .filter((favorite) => favorite !== book.key)
+        .concat(book.key),
+      favorites: state.favorites
+        .filter((favorite) => favorite.key !== book.key)
+        .concat(book),
     })),
     // temp
-    on(UserActions.removeFavorite, (state, { bookId }) => ({
+    on(UserActions.removeFavorite, (state, { book }) => ({
       ...state,
-      favorites: state.favorites.filter((favorite) => favorite !== bookId),
+      favoriteIds: state.favoriteIds.filter(
+        (favorite) => favorite !== book.key
+      ),
+      favorites: state.favorites.filter(
+        (favorite) => favorite.key !== book.key
+      ),
     })),
     on(
       UserActions.addFavoriteSuccess,
       UserActions.removeFavoriteSuccess,
-      (state, { favorites }) => ({
+      (state, { favoriteIds }) => ({
         ...state,
-        favorites,
+        favoriteIds,
       })
     )
   ),

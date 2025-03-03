@@ -1,5 +1,6 @@
 import { createActionGroup, emptyProps, props } from "@ngrx/store";
 import { User } from "./user.feature";
+import { Book } from "../../books/store/books.feature";
 
 export const UserActions = createActionGroup({
   source: 'User',
@@ -7,9 +8,9 @@ export const UserActions = createActionGroup({
     resetUser: emptyProps(),
     loadUser: emptyProps(),
     loadUserSuccess: props<{ user: User }>(),
-    addFavorite: props<{ bookId: string }>(),
-    addFavoriteSuccess: props<{ favorites: string[] }>(),
-    removeFavorite: props<{ bookId: string }>(),
-    removeFavoriteSuccess: props<{ favorites: string[] }>(),
+    addFavorite: props<{ book: Book }>(),
+    addFavoriteSuccess: props<{ favoriteIds: string[] }>(),
+    removeFavorite: props<{ book: Book }>(),
+    removeFavoriteSuccess: props<{ favoriteIds: string[] }>(),
   },
 });

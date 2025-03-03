@@ -1,1 +1,8 @@
-<p>{{ favorites() }}</p>
+<lib-book-list
+  class="w-full h-full"
+  [books]="favorites()"
+  [favoriteIds]="favoriteIds()"
+  [disableSearch]="true"
+  (addFavorite)="addFavorite($event.book)"
+  (removeFavorite)="removeFavorite($event.book)"
+></lib-book-list>
