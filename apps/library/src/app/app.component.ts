@@ -4,16 +4,17 @@ import { ThemeService } from './services/theme.service';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
 import { NgIcon, provideIcons } from '@ng-icons/core';
-import { lucideBook, lucideHeart, lucideLogOut, lucideMoon, lucideSun } from '@ng-icons/lucide';
+import { lucideBook, lucideHeart, lucideLogIn, lucideLogOut, lucideMoon, lucideSun } from '@ng-icons/lucide';
 import { Store } from '@ngrx/store';
 import { userFeature } from './user/store/user.feature';
 import { map } from 'rxjs';
 import { AuthActions } from './auth/store/auth.actions';
 import { AsyncPipe } from '@angular/common';
+import { UserActions } from './user/store/user.actions';
 
 @Component({
   imports: [RouterModule, HlmButtonDirective, NgIcon, HlmIconDirective, AsyncPipe],
-  providers: [provideIcons({ lucideBook, lucideHeart, lucideSun, lucideMoon, lucideLogOut })],
+  providers: [provideIcons({ lucideBook, lucideHeart, lucideSun, lucideMoon, lucideLogOut, lucideLogIn })],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -35,8 +36,8 @@ export class AppComponent {
   }
 
   logout(): void {
-    this.store.dispatch(AuthActions.logout());
-    this.router.navigate(['/'], { onSameUrlNavigation: 'reload' });
+    this.store.dispatch(UserActions.resetUser());
+    this.router.navigate(['/']);
   }
   
 }

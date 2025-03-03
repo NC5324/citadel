@@ -1,9 +1,4 @@
-<form
-  [formGroup]="form"
-  hlmCard
-  class="m-auto flex flex-col"
-  (submit)="login()"
->
+<section [formGroup]="form" hlmCard class="m-auto flex flex-col">
   <header hlmCardHeader class="p-4 text-xl">
     <h3 hlmCardTitle>Login</h3>
   </header>
@@ -20,9 +15,9 @@
     <button
       hlmBtn
       class="flex-grow"
-      type="submit"
       variant="secondary"
       [disabled]="form.invalid"
+      (click)="login()"
     >
       Submit
     </button>
@@ -30,9 +25,9 @@
       hlmBtn
       class="flex-grow"
       variant="secondary"
-      routerLink="/auth/signup"
+      (click)="navigateToSignup()"
     >
       Signup
     </button>
   </footer>
-</form>
+</section>

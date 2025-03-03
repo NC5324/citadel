@@ -2,6 +2,7 @@
   class="w-full h-full"
   [books]="books()"
   [hasMore]="hasMore()"
+  [disableEmpty]="true"
   [favoriteIds]="favoriteIds()"
   [(searchQuery)]="searchQuery"
   (search)="search($event.query)"

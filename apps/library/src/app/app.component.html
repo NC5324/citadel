@@ -22,6 +22,10 @@
       <button hlmBtn size="icon" variant="ghost" (click)="logout()">
         <ng-icon hlm size="sm" name="lucideLogOut" />
       </button>
+      } @else {
+      <button hlmBtn size="icon" variant="ghost" routerLink="/auth/login">
+        <ng-icon hlm size="sm" name="lucideLogIn" />
+      </button>
       }
     </div>
   </div>

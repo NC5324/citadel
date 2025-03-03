@@ -39,6 +39,16 @@ export class LoginComponent {
     password: new FormControl<string | null>(null, Validators.required),
   });
 
+  navigateToSignup(): void {
+    const { returnUrl } = this.location.getState() as { returnUrl?: string };
+    console.log(returnUrl);
+    this.router.navigateByUrl('/auth/signup', {
+      state: {
+        returnUrl,
+      },
+    });
+  }
+
   login(): void {
     const { username, password } = this.form.value;
     const { returnUrl } = this.location.getState() as { returnUrl?: string };

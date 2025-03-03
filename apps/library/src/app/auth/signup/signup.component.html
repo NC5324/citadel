@@ -1,9 +1,4 @@
-<form
-  [formGroup]="form"
-  hlmCard
-  class="m-auto flex flex-col"
-  (submit)="signup()"
->
+<section [formGroup]="form" hlmCard class="m-auto flex flex-col">
   <header hlmCardHeader class="p-4 text-xl">
     <h3 hlmCardTitle>Signup</h3>
   </header>
@@ -31,9 +26,9 @@
     <button
       hlmBtn
       class="flex-grow"
-      type="submit"
       variant="secondary"
       [disabled]="form.invalid"
+      (click)="signup()"
     >
       Submit
     </button>
@@ -46,4 +41,4 @@
       Login
     </button>
   </footer>
-</form>
+</section>

@@ -34,13 +34,14 @@ export class SignupComponent {
 
   readonly form = new FormGroup({
     username: new FormControl<string | null>(null, Validators.required),
-    password: new FormControl<string | null>(null, [Validators.required, this.equalsValidator('confirmPassword')]),
+    password: new FormControl<string | null>(null, Validators.required),
     confirmPassword: new FormControl<string | null>(null, [Validators.required, this.equalsValidator('password')]),
   });
 
   signup(): void {
     const { username, password } = this.form.value;
     const { returnUrl } = this.location.getState() as { returnUrl?: string };
+    console.log(returnUrl);
     this.store.dispatch(AuthActions.signup({ username: username as string, password: password as string }));
     this.router.navigateByUrl(returnUrl ?? '/', {
       state: {

@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthActions } from './auth.actions';
-import { catchError, EMPTY, exhaustMap, map } from 'rxjs';
+import { catchError, EMPTY, exhaustMap, map, tap } from 'rxjs';
 import { AuthService } from './auth.service';
 import { UserActions } from '../../user/store/user.actions';
 
@@ -39,6 +39,7 @@ export class AuthEffects {
 			ofType(AuthActions.logout),
 			exhaustMap(() =>
 				this.authService.logout$().pipe(
+					tap(() => console.log('???')),
 					map(() => UserActions.resetUser()),
 					catchError(() => EMPTY)
 				)
