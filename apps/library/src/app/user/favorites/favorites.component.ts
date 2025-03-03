@@ -1,4 +1,10 @@
-import { ChangeDetectionStrategy, Component, DestroyRef, HostListener, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  DestroyRef,
+  HostListener,
+  inject,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { BooksActions } from '../../books/store/books.actions';
@@ -9,13 +15,13 @@ import { BookListComponent } from '@citadel/books';
 import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
-  selector: 'app-favorites-list',
+  selector: 'app-favorites',
   imports: [CommonModule, BookListComponent],
-  templateUrl: './favorites-list.component.html',
-  styleUrl: './favorites-list.component.css',
+  templateUrl: './favorites.component.html',
+  styleUrl: './favorites.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class FavoritesListComponent {
+export class FavoritesComponent {
   readonly store = inject(Store);
   readonly destroyRef = inject(DestroyRef);
 
@@ -23,7 +29,9 @@ export class FavoritesListComponent {
   private readonly subjectRegex = /^[A-Za-z]+$/g;
 
   readonly favorites = toSignal(this.store.select(userFeature.selectFavorites));
-  readonly favoriteIds = toSignal(this.store.select(userFeature.selectFavoriteIds));
+  readonly favoriteIds = toSignal(
+    this.store.select(userFeature.selectFavoriteIds)
+  );
 
   @HostListener('window:keydown.enter')
   handleKeyDown() {
@@ -31,7 +39,8 @@ export class FavoritesListComponent {
   }
 
   bookTags(book: Book): string[] {
-    let tags = book.subject?.filter((s) => this.subjectRegex.test(s))?.slice(0, 5) ?? [];
+    let tags =
+      book.subject?.filter((s) => this.subjectRegex.test(s))?.slice(0, 5) ?? [];
     if (!tags.length) {
       tags = book.subject?.slice(0, 2) ?? [];
     }

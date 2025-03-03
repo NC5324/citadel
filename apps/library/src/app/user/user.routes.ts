@@ -21,7 +21,7 @@ const authGuard = (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) =>
 export const userRoutes: Route[] = [
     {
         path: 'favorites',
-        loadComponent: () => import('./favorites-list/favorites-list.component').then((c) => c.FavoritesListComponent),
+        loadComponent: () => import('./favorites/favorites.component').then((c) => c.FavoritesComponent),
         canActivate: [authGuard],
     },
 ]
