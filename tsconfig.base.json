@@ -16,7 +16,6 @@
     "baseUrl": ".",
     "paths": {
       "@citadel/books": ["libs/books/src/index.ts"],
-      "@citadel/models": ["libs/shared/models/src/index.ts"],
       "@citadel/search": ["libs/shared/ui/search/src/index.ts"],
       "@spartan-ng/ui-badge-helm": [
         "libs/shared/ui/ui-badge-helm/src/index.ts"
