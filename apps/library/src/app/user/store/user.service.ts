@@ -12,11 +12,11 @@ export class UserService {
     }
 
     addFavorite$(userId: number, bookId: string): Observable<string[]> {
-        return this.http.post<string[]>(`user/${userId}/favorites/add`, { bookId });
+        return this.http.post<string[]>(`/api/user/${userId}/favorites/add`, { bookId });
     }
 
     removeFavorite$(userId: number, bookId: string): Observable<string[]> {
-        return this.http.post<string[]>(`user/${userId}/favorites/remove`, { bookId });
+        return this.http.post<string[]>(`/api/user/${userId}/favorites/remove`, { bookId });
     }
 
 }
