@@ -33,14 +33,7 @@ import { Book } from '../../../../../apps/library/src/app/books/store/books.feat
 export class BookListComponent {
 
   readonly books = input<Book[]>();
-  readonly hasMore = input<boolean>();
   readonly favoriteIds = input<string[]>();
-  readonly searchQuery = model<string>('');
-  readonly disableSearch = input<boolean>();
-  readonly disableEmpty = input<boolean>();
-
-  @Output()
-  readonly showMore = new EventEmitter();
 
   @Output()
   readonly addFavorite = new EventEmitter();
@@ -52,11 +45,6 @@ export class BookListComponent {
   readonly search = new EventEmitter();
 
   private readonly subjectRegex = /^[A-Za-z]+$/g;
-
-  @HostListener('window:keydown.enter')
-  handleKeyDown() {
-    this.onSearch(this.searchQuery());
-  }
 
   bookTags(book: Book): string[] {
     let tags = book.subject?.filter((s) => this.subjectRegex.test(s))?.slice(0, 5) ?? [];
@@ -70,12 +58,6 @@ export class BookListComponent {
     return tags;
   }
 
-  onSearch(query: string): void {
-    if (query) {
-      this.search.emit({ query });
-    }
-  }
-
   isFavorite(bookId: string, favorites: string[] | undefined): boolean {
     return !!favorites?.includes(bookId);
   }
@@ -87,9 +69,5 @@ export class BookListComponent {
   onRemoveFavorite(book: Book): void {
     this.removeFavorite.emit({ book });
   }
-
-  onShowMore(query: string): void {
-    this.showMore.emit({ query });
-  }
-
+  
 }

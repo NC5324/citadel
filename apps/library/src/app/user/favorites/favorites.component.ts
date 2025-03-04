@@ -25,18 +25,12 @@ export class FavoritesComponent {
   readonly store = inject(Store);
   readonly destroyRef = inject(DestroyRef);
 
-  readonly searchQuery = '';
   private readonly subjectRegex = /^[A-Za-z]+$/g;
 
   readonly favorites = toSignal(this.store.select(userFeature.selectFavorites));
   readonly favoriteIds = toSignal(
     this.store.select(userFeature.selectFavoriteIds)
   );
-
-  @HostListener('window:keydown.enter')
-  handleKeyDown() {
-    this.search(this.searchQuery);
-  }
 
   bookTags(book: Book): string[] {
     let tags =

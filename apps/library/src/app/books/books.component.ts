@@ -20,10 +20,11 @@ import { BooksActions } from './store/books.actions';
 import { UserActions } from '../user/store/user.actions';
 import { userFeature } from '../user/store/user.feature';
 import { BookListComponent } from '@citadel/books';
+import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
 
 @Component({
   selector: 'app-books',
-  imports: [CommonModule, BookListComponent],
+  imports: [CommonModule, BookListComponent, HlmButtonDirective],
   providers: [
     provideIcons({ lucideSearch, lucideHeart, lucideHeartCrack, lucideEye }),
   ],
@@ -46,11 +47,6 @@ export class BooksComponent implements OnInit {
   ngOnInit(): void {
     const { search } = this.location.getState() as { search?: string };
     this.searchQuery = search ?? '';
-    this.search(this.searchQuery);
-  }
-
-  @HostListener('window:keydown.enter')
-  handleKeyDown() {
     this.search(this.searchQuery);
   }
 

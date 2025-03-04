@@ -1,12 +1,12 @@
 <lib-book-list
-  class="w-full h-full"
   [books]="books()"
-  [hasMore]="hasMore()"
-  [disableEmpty]="true"
   [favoriteIds]="favoriteIds()"
-  [(searchQuery)]="searchQuery"
   (search)="search($event.query)"
-  (showMore)="showMore($event.query)"
   (addFavorite)="addFavorite($event.book)"
   (removeFavorite)="removeFavorite($event.book)"
 ></lib-book-list>
+@if (books()?.length && hasMore()) {
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mt-[-19px]">
+  <button hlmBtn class="mb-2" (click)="showMore(searchQuery)">Show more</button>
+</div>
+}

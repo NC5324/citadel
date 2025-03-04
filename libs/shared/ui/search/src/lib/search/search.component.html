@@ -1,0 +1,16 @@
+<div
+  [class]="'flex items-center bg-accent text-accent-foreground space-x-2 pl-3 rounded-sm ' + (variant() === 'slim' ? 'p-1' : 'p-2')"
+>
+  <ng-icon hlm size="sm" name="lucideSearch" />
+  <input
+    class="outline-none flex-grow"
+    placeholder="Search"
+    [(ngModel)]="value"
+  />
+  <button
+    class="cursor-pointer bg-background/90 text-foreground not-dark:bg-accent-foreground not-dark:text-accent py-1 px-2 ml-auto rounded-sm text-sm"
+    (click)="emitSearch()"
+  >
+    Search
+  </button>
+</div>
