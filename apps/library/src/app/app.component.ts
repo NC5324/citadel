@@ -20,6 +20,7 @@ import { UserActions } from './user/store/user.actions';
 import { SearchComponent } from '@citadel/search';
 import { BooksActions } from './books/store/books.actions';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SearchService } from './services/search.service';
 
 @Component({
   imports: [
@@ -45,44 +46,24 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
   styleUrl: './app.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   readonly title = 'Citadel';
 
   readonly store = inject(Store);
   readonly router = inject(Router);
   readonly location = inject(Location);
   readonly themeService = inject(ThemeService);
+  readonly searchService = inject(SearchService);
   readonly destroyRef = inject(DestroyRef);
 
   readonly authenticated$ = this.store
     .select(userFeature.selectUser)
     .pipe(map((user) => !!user));
 
-  public searchQuery = '';
-
-  ngOnInit(): void {
-    this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
-      takeUntilDestroyed(this.destroyRef),
-    ).subscribe(() => {
-      const { search } = this.location.getState() as { search?: string };
-      this.searchQuery = search ?? '';
-      this.search();
-    });
-  }
-
   search(): void {
-    if (!this.searchQuery) {
-      return;
-    }
-    if (this.router.url === '/books') {
-      this.store.dispatch(BooksActions.search({ query: this.searchQuery }));
-    } else {
-      this.router.navigateByUrl('/books', {
-        state: {
-          search: this.searchQuery,
-        },
-      });
+    this.searchService.search();
+    if (this.router.url !== '/books') {
+      this.router.navigateByUrl('/books');
     }
   }
 

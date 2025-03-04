@@ -41,9 +41,6 @@ export class BookListComponent {
   @Output()
   readonly removeFavorite = new EventEmitter();
 
-  @Output()
-  readonly search = new EventEmitter();
-
   private readonly subjectRegex = /^[A-Za-z]+$/g;
 
   bookTags(book: Book): string[] {
@@ -69,5 +66,5 @@ export class BookListComponent {
   onRemoveFavorite(book: Book): void {
     this.removeFavorite.emit({ book });
   }
-  
+
 }

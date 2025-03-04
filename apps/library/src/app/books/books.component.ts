@@ -21,6 +21,7 @@ import { UserActions } from '../user/store/user.actions';
 import { userFeature } from '../user/store/user.feature';
 import { BookListComponent } from '@citadel/books';
 import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
+import { SearchService } from '../services/search.service';
 
 @Component({
   selector: 'app-books',
@@ -32,29 +33,15 @@ import { HlmButtonDirective } from '@spartan-ng/ui-button-helm';
   styleUrl: './books.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BooksComponent implements OnInit {
+export class BooksComponent {
   readonly store = inject(Store);
-  readonly location = inject(Location);
-
-  public searchQuery = '';
+  readonly searchService = inject(SearchService);
 
   readonly books = toSignal(this.store.select(booksFeature.selectBooks));
   readonly hasMore = toSignal(this.store.select(booksFeature.selectHasMore));
   readonly favoriteIds = toSignal(
     this.store.select(userFeature.selectFavoriteIds)
   );
-
-  ngOnInit(): void {
-    const { search } = this.location.getState() as { search?: string };
-    this.searchQuery = search ?? '';
-    this.search(this.searchQuery);
-  }
-
-  search(query: string): void {
-    if (query) {
-      this.store.dispatch(BooksActions.search({ query }));
-    }
-  }
 
   addFavorite(book: Book): void {
     this.store.dispatch(UserActions.addFavorite({ book }));
@@ -64,7 +51,7 @@ export class BooksComponent implements OnInit {
     this.store.dispatch(UserActions.removeFavorite({ book }));
   }
 
-  showMore(query: string): void {
-    this.store.dispatch(BooksActions.showMore({ query }));
+  showMore(): void {
+    this.store.dispatch(BooksActions.showMore({ query: this.searchService.query }));
   }
 }

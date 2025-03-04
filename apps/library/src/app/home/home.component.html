@@ -4,7 +4,7 @@
   </div>
   <lib-search
     class="w-full md:max-w-[80%] lg:max-w-[60%] xl:max-w-[40%]"
-    [(value)]="searchQuery"
-    (search)="search(searchQuery)"
+    [(value)]="searchService.query"
+    (search)="search()"
   ></lib-search>
 </div>

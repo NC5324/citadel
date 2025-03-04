@@ -9,7 +9,7 @@
       <lib-search
         class="hidden md:flex ml-2"
         variant="slim"
-        [(value)]="searchQuery"
+        [(value)]="searchService.query"
         (search)="search()"
       ></lib-search>
       }
@@ -38,7 +38,7 @@
   </div>
   @if (router.url !== '/') {
   <div class="py-2 border-b md:hidden p-3">
-    <lib-search [(value)]="searchQuery" (search)="search()"></lib-search>
+    <lib-search [(value)]="searchService.query" (search)="search()"></lib-search>
   </div>
   }
   <div class="flex flex-col flex-grow overflow-x-hidden overflow-y-auto p-3 pt-1">
