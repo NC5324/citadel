@@ -1,24 +1,24 @@
 @if (book$ | async; as book) {
-<section hlmCard class="flex flex-col m-4">
-  <header hlmCardHeader class="flex flex-row space-x-4">
+<section hlmCard class="flex flex-col mt-2 md:m-2 md:mt-4">
+  <header hlmCardHeader class="flex flex-col md:flex-row md:space-x-4 p-3">
     <img
-      class="w-[400px] h-[650px] bg-accent rounded-xs"
+      class="w-full md:w-[400px] md:h-[650px] bg-accent rounded-xs"
       [src]="'https://covers.openlibrary.org/b/id/' + book.covers[0] + '-L.jpg'"
       [alt]="book.title + ' cover'"
       width="400"
       height="650"
     />
     <div class="flex flex-col">
-      <h1 hlmCardTitle class="text-3xl">{{ book.title }}</h1>
+      <h1 hlmCardTitle class="text-3xl order-1">{{ book.title }}</h1>
       @if (typeof book.description === 'string') {
-      <p hlmCardDescription>{{ book.description }}</p>
+      <p hlmCardDescription class="order-2">{{ book.description }}</p>
       }
-      <div class="flex flex-wrap gap-2 mt-2">
+      <div class="flex flex-wrap gap-2 mt-2 order-3">
         @for (subject of book.subjects; track subject) {
         <div hlmBadge variant="secondary">{{ subject }}</div>
         }
       </div>
-      <div class="mt-4">
+      <div class="my-2 order-4">
         @if (isFavorite(book.key, favoriteIds())) {
         <button hlmBtn variant="destructive" (click)="removeFavorite(book)">
           <ng-icon hlm size="sm" class="mr-2" name="lucideHeartCrack" />
