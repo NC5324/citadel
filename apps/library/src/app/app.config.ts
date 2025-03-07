@@ -11,6 +11,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideHttpClient } from '@angular/common/http';
 import { UserEffects } from './user/store/user.effects';
 import { userFeature } from './user/store/user.feature';
+import { booksFeature } from './books/store/books.feature';
+import { BooksEffects } from './books/store/books.effects';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -19,6 +21,8 @@ export const appConfig: ApplicationConfig = {
     provideEffects(),
     provideState(userFeature),
     provideEffects(UserEffects),
+    provideState(booksFeature),
+    provideEffects(BooksEffects),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideHttpClient(),
