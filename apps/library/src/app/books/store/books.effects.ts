@@ -40,7 +40,7 @@ export class BooksEffects {
         this.store.select(booksFeature.selectPageSize),
       ]),
       switchMap(([{ query }, page, pageSize]) =>
-        this.booksService.searchBooks$(query, page + 1, pageSize).pipe(
+        this.booksService.searchBooks$(query, page, pageSize).pipe(
           map((res) =>
             BooksActions.showMoreSuccess({
               books: res.docs,
