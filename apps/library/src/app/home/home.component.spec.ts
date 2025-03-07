@@ -2,30 +2,33 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HomeComponent } from './home.component';
 import { FormsModule } from '@angular/forms';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { provideRouter, Router } from '@angular/router';
-import { appRoutes } from '../app.routes';
-import { NgIcon, provideIcons } from '@ng-icons/core';
+import { Router } from '@angular/router';
+import { provideIcons } from '@ng-icons/core';
 import { lucideSearch } from '@ng-icons/lucide';
-import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
+import { SearchService } from '../services/search.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
-  let store: MockStore;
-  let router: Router;
+  let mockStore: MockStore;
+  let mockRouter: jest.Mocked<Router>;
+  let mockSearchService: jest.Mocked<SearchService>;
 
   beforeEach(async () => {
+    mockRouter = { navigateByUrl: jest.fn() } as unknown as jest.Mocked<Router>;
+    mockSearchService = { query: '', search: jest.fn() } as unknown as jest.Mocked<SearchService>;
+
     await TestBed.configureTestingModule({
       imports: [HomeComponent, FormsModule],
       providers: [
         provideMockStore(),
-        provideRouter(appRoutes),
         provideIcons({ lucideSearch }),
+        { provide: Router, useValue: mockRouter },
+        { provide: SearchService, useValue: mockSearchService },
       ],
     }).compileComponents();
 
-    store = TestBed.inject(MockStore);
-    router = TestBed.inject(Router);
+    mockStore = TestBed.inject(MockStore);
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -42,38 +45,50 @@ describe('HomeComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Citadel');
   });
 
-  it('should render sub title', () => {
-    const fixture = TestBed.createComponent(HomeComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h2')?.textContent).toContain(
-      'A Library Of Ice And Fire'
-    );
-  });
-
   it('should call search function with input value when button is clicked', () => {
-    const input = fixture.nativeElement.querySelector('input');
-    input.value = 'Stormlight';
-    input.dispatchEvent(new Event('input'));
-
-    const button = fixture.nativeElement.querySelector('button');
     jest.spyOn(component, 'search');
+    const button = fixture.nativeElement.querySelector('lib-search > button');
+    const input = fixture.nativeElement.querySelector('lib-search > input');
+    input.value = 'Mistborn';
+
+    input.dispatchEvent(new Event('input'));
     button.click();
 
-    expect(component.search).toHaveBeenCalledWith('Stormlight');
+    expect(component.search).toHaveBeenCalledWith('Mistborn');
   });
 
-  it('search function should dispatch action and navigate', () => {
-    const testQuery = 'Wheel of Time';
-    component.search(testQuery);
+  it('should navigate to books page on search', () => {
+    jest.spyOn(mockRouter, 'navigateByUrl');
+    mockSearchService.query = 'Brandon Sanderson';
 
-    expect(store.dispatch).toHaveBeenCalled();
-    expect(router.navigate).toHaveBeenCalledWith('/books');
+    component.search();
+
+    expect(mockRouter.navigateByUrl).toHaveBeenCalledWith('/books');
   });
 
-  it('should clear search query after search', () => {
-    component.searchQuery = 'Test Query';
-    component.search(component.searchQuery);
-    expect(component.searchQuery).toBe('');
+  it('should dispatch search action on enter', () => {
+    jest.spyOn(mockStore, 'dispatch');
+    mockSearchService.query = 'Mistborn';
+
+    window.dispatchEvent(
+      new KeyboardEvent('keydown', {
+        key: 'Enter',
+        code: 'Enter',
+        keyCode: 13,
+        bubbles: true,
+      })
+    );
+
+    expect(mockStore.dispatch).toHaveBeenCalledWith({ query: 'Mistborn' });
   });
+
+  it('should not dispatch search action on empty query', () => {
+    jest.spyOn(mockStore, 'dispatch');
+    mockSearchService.query = '';
+
+    component.search();
+
+    expect(mockStore.dispatch).toHaveBeenCalledTimes(0);
+  });
+
 });

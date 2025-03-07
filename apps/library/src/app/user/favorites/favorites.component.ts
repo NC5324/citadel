@@ -67,7 +67,4 @@ export class FavoritesComponent {
     this.store.dispatch(UserActions.removeFavorite({ book }));
   }
 
-  showMore(query: string): void {
-    this.store.dispatch(BooksActions.showMore({ query }));
-  }
 }

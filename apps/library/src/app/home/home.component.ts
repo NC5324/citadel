@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-	this.searchService.query = '';
+	  this.searchService.query = '';
   }
 
   search(): void {

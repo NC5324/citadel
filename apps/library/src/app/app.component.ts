@@ -14,12 +14,10 @@ import {
 } from '@ng-icons/lucide';
 import { Store } from '@ngrx/store';
 import { userFeature } from './user/store/user.feature';
-import { filter, map } from 'rxjs';
-import { AsyncPipe, Location } from '@angular/common';
+import { map } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 import { UserActions } from './user/store/user.actions';
 import { SearchComponent } from '@citadel/search';
-import { BooksActions } from './books/store/books.actions';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { SearchService } from './services/search.service';
 
 @Component({
@@ -51,10 +49,8 @@ export class AppComponent {
 
   readonly store = inject(Store);
   readonly router = inject(Router);
-  readonly location = inject(Location);
   readonly themeService = inject(ThemeService);
   readonly searchService = inject(SearchService);
-  readonly destroyRef = inject(DestroyRef);
 
   readonly authenticated$ = this.store
     .select(userFeature.selectUser)
@@ -62,7 +58,7 @@ export class AppComponent {
 
   search(): void {
     this.searchService.search();
-    if (this.router.url !== '/books') {
+    if (this.searchService.query && this.router.url !== '/books') {
       this.router.navigateByUrl('/books');
     }
   }
