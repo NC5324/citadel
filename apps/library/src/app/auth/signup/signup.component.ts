@@ -41,7 +41,6 @@ export class SignupComponent {
   signup(): void {
     const { username, password } = this.form.value;
     const { returnUrl } = this.location.getState() as { returnUrl?: string };
-    console.log(returnUrl);
     this.store.dispatch(AuthActions.signup({ username: username as string, password: password as string }));
     this.router.navigateByUrl(returnUrl ?? '/', {
       state: {

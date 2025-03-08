@@ -21,7 +21,6 @@ import { UserActions } from 'apps/library/src/app/user/store/user.actions';
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule,
     NgIcon,
     HlmIconDirective,
     HlmButtonDirective,

@@ -2,7 +2,6 @@ import {
   ChangeDetectionStrategy,
   Component,
   DestroyRef,
-  HostListener,
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';

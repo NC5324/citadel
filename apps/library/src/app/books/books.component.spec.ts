@@ -5,29 +5,31 @@ import { SearchService } from '../services/search.service';
 import { Book } from './store/books.feature';
 import { UserActions } from '../user/store/user.actions';
 import { BooksActions } from './store/books.actions';
-
-class MockSearchService {
-  query = '';
-}
+import { ActivatedRoute } from '@angular/router';
 
 describe('BooksComponent', () => {
   let component: BooksComponent;
   let fixture: ComponentFixture<BooksComponent>;
   let mockStore: MockStore;
-  let mockSearchService: MockSearchService;
+  let dispatchSpy: jest.SpyInstance;
+  let mockActivatedRoute: jest.Mocked<ActivatedRoute>;
+  let searchService: SearchService;
 
   beforeEach(async () => {
+    mockActivatedRoute = {} as unknown as jest.Mocked<ActivatedRoute>;
 
     await TestBed.configureTestingModule({
       imports: [BooksComponent],
       providers: [
-        { provide: SearchService, useValue: MockSearchService },
+        SearchService,
         provideMockStore(),
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
       ],
     }).compileComponents();
 
     mockStore = TestBed.inject(MockStore);
-    mockSearchService = TestBed.inject(MockSearchService);
+    dispatchSpy = jest.spyOn(mockStore, 'dispatch');
+    searchService = TestBed.inject(SearchService);
     fixture = TestBed.createComponent(BooksComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -38,7 +40,6 @@ describe('BooksComponent', () => {
   });
 
   it('should dispatch add favorite action', () => {
-    jest.spyOn(mockStore, 'dispatch');
     const mockBook: Book = {
       key: '',
       title: '',
@@ -53,11 +54,10 @@ describe('BooksComponent', () => {
 
     component.addFavorite(mockBook);
 
-    expect(mockStore.dispatch).toHaveBeenCalledWith(UserActions.addFavorite({ book: mockBook }));
+    expect(dispatchSpy).toHaveBeenCalledWith(UserActions.addFavorite({ book: mockBook }));
   });
 
   it('should dispatch remove favorite action', () => {
-    jest.spyOn(mockStore, 'dispatch');
     const mockBook: Book = {
       key: '',
       title: '',
@@ -72,17 +72,16 @@ describe('BooksComponent', () => {
     
     component.removeFavorite(mockBook);
 
-    expect(mockStore.dispatch).toHaveBeenCalledWith(UserActions.removeFavorite({ book: mockBook }));
+    expect(dispatchSpy).toHaveBeenCalledWith(UserActions.removeFavorite({ book: mockBook }));
   });
 
   it('should dispatch show more action with search service query', () => {
-    jest.spyOn(mockStore, 'dispatch');
     const mockQuery = 'The Stormlight Archive';
-    mockSearchService.query = mockQuery;
+    searchService.query = mockQuery;
 
     component.showMore();
 
-    expect(mockStore.dispatch).toHaveBeenCalledWith(BooksActions.showMore({ query: mockQuery }));
+    expect(dispatchSpy).toHaveBeenCalledWith(BooksActions.showMore({ query: mockQuery }));
   });
 
 });

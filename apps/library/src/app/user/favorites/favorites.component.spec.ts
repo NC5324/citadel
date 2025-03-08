@@ -1,25 +1,30 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FavoritesComponent } from './favorites.component';
 import { MockStore, provideMockStore } from '@ngrx/store/testing';
-import { inject } from '@angular/core';
 import { Book } from '../../books/store/books.feature';
 import { UserActions } from '../store/user.actions';
 import { BooksActions } from '../../books/store/books.actions';
+import { ActivatedRoute } from '@angular/router';
 
 describe('FavoritesComponent', () => {
   let component: FavoritesComponent;
   let fixture: ComponentFixture<FavoritesComponent>;
   let mockStore: MockStore;
+  let dispatchSpy: jest.SpyInstance;
+  let activatedRoute: jest.Mocked<ActivatedRoute>;
 
   beforeEach(async () => {
+    activatedRoute = {} as unknown as jest.Mocked<ActivatedRoute>;
     await TestBed.configureTestingModule({
       imports: [FavoritesComponent],
       providers: [
         provideMockStore(),
+        { provide: ActivatedRoute, useValue: activatedRoute },
       ],
     }).compileComponents();
 
-    mockStore = inject(MockStore);
+    mockStore = TestBed.inject(MockStore);
+    dispatchSpy = jest.spyOn(mockStore, 'dispatch');
     fixture = TestBed.createComponent(FavoritesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -30,7 +35,6 @@ describe('FavoritesComponent', () => {
   });
 
   it('should dispatch add favorite action', () => {
-    jest.spyOn(mockStore, 'dispatch');
     const mockBook: Book = {
       key: '',
       title: '',
@@ -45,11 +49,10 @@ describe('FavoritesComponent', () => {
 
     component.addFavorite(mockBook);
 
-    expect(mockStore.dispatch).toHaveBeenCalledWith(UserActions.addFavorite({ book: mockBook }));
+    expect(dispatchSpy).toHaveBeenCalledWith(UserActions.addFavorite({ book: mockBook }));
   });
 
   it('should dispatch remove favorite action', () => {
-    jest.spyOn(mockStore, 'dispatch');
     const mockBook: Book = {
       key: '',
       title: '',
@@ -64,23 +67,19 @@ describe('FavoritesComponent', () => {
 
     component.removeFavorite(mockBook);
 
-    expect(mockStore.dispatch).toHaveBeenCalledWith(UserActions.removeFavorite({ book: mockBook }));
+    expect(dispatchSpy).toHaveBeenCalledWith(UserActions.removeFavorite({ book: mockBook }));
   });
 
   it('should dispatch search action', () => {
-    jest.spyOn(mockStore, 'dispatch');
-
     component.search('Mistborn');
 
-    expect(mockStore.dispatch).toHaveBeenCalledWith(BooksActions.search({ query: 'Mistborn' }));
+    expect(dispatchSpy).toHaveBeenCalledWith(BooksActions.search({ query: 'Mistborn' }));
   });
 
   it('should not dispatch search action on empty query', () => {
-    jest.spyOn(mockStore, 'dispatch');
-
     component.search('');
 
-    expect(mockStore.dispatch).toHaveBeenCalledTimes(0);
+    expect(dispatchSpy).toHaveBeenCalledTimes(0);
   });
 
 });

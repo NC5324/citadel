@@ -15,7 +15,6 @@ import { Book } from '../../../../../apps/library/src/app/books/store/books.feat
   imports: [
     CommonModule,
     RouterModule,
-    FormsModule,
     NgIcon,
     HlmIconDirective,
     HlmButtonDirective,

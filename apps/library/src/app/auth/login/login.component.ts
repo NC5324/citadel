@@ -41,7 +41,6 @@ export class LoginComponent {
 
   navigateToSignup(): void {
     const { returnUrl } = this.location.getState() as { returnUrl?: string };
-    console.log(returnUrl);
     this.router.navigateByUrl('/auth/signup', {
       state: {
         returnUrl,

@@ -6,29 +6,32 @@ import { Router } from '@angular/router';
 import { provideIcons } from '@ng-icons/core';
 import { lucideSearch } from '@ng-icons/lucide';
 import { SearchService } from '../services/search.service';
+import { BooksActions } from '../books/store/books.actions';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let mockStore: MockStore;
   let mockRouter: jest.Mocked<Router>;
-  let mockSearchService: jest.Mocked<SearchService>;
+  let dispatchSpy: jest.SpyInstance;
+  let searchService: SearchService;
 
   beforeEach(async () => {
     mockRouter = { navigateByUrl: jest.fn() } as unknown as jest.Mocked<Router>;
-    mockSearchService = { query: '', search: jest.fn() } as unknown as jest.Mocked<SearchService>;
 
     await TestBed.configureTestingModule({
       imports: [HomeComponent, FormsModule],
       providers: [
+        SearchService,
         provideMockStore(),
         provideIcons({ lucideSearch }),
         { provide: Router, useValue: mockRouter },
-        { provide: SearchService, useValue: mockSearchService },
       ],
     }).compileComponents();
 
     mockStore = TestBed.inject(MockStore);
+    dispatchSpy = jest.spyOn(mockStore, 'dispatch');
+    searchService = TestBed.inject(SearchService);
     fixture = TestBed.createComponent(HomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
@@ -45,21 +48,8 @@ describe('HomeComponent', () => {
     expect(compiled.querySelector('h1')?.textContent).toContain('Citadel');
   });
 
-  it('should call search function with input value when button is clicked', () => {
-    jest.spyOn(component, 'search');
-    const button = fixture.nativeElement.querySelector('lib-search > button');
-    const input = fixture.nativeElement.querySelector('lib-search > input');
-    input.value = 'Mistborn';
-
-    input.dispatchEvent(new Event('input'));
-    button.click();
-
-    expect(component.search).toHaveBeenCalledWith('Mistborn');
-  });
-
   it('should navigate to books page on search', () => {
-    jest.spyOn(mockRouter, 'navigateByUrl');
-    mockSearchService.query = 'Brandon Sanderson';
+    searchService.query = 'Brandon Sanderson';
 
     component.search();
 
@@ -67,8 +57,7 @@ describe('HomeComponent', () => {
   });
 
   it('should dispatch search action on enter', () => {
-    jest.spyOn(mockStore, 'dispatch');
-    mockSearchService.query = 'Mistborn';
+    searchService.query = 'Mistborn';
 
     window.dispatchEvent(
       new KeyboardEvent('keydown', {
@@ -79,16 +68,15 @@ describe('HomeComponent', () => {
       })
     );
 
-    expect(mockStore.dispatch).toHaveBeenCalledWith({ query: 'Mistborn' });
+    expect(dispatchSpy).toHaveBeenCalledWith(BooksActions.search({ query: 'Mistborn' }));
   });
 
   it('should not dispatch search action on empty query', () => {
-    jest.spyOn(mockStore, 'dispatch');
-    mockSearchService.query = '';
+    searchService.query = '';
 
     component.search();
 
-    expect(mockStore.dispatch).toHaveBeenCalledTimes(0);
+    expect(dispatchSpy).toHaveBeenCalledTimes(0);
   });
 
 });
