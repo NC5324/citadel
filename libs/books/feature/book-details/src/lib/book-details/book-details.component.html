@@ -1,4 +1,4 @@
-@let favoriteIds = favoriteIds$ | async; @if (book$ | async; as book) {
+@if (book$ | async; as book) {
 <section hlmCard class="flex flex-col mt-2 md:m-2 md:mt-4">
   <header hlmCardHeader class="flex flex-col md:flex-row md:space-x-4 p-3">
     <img
@@ -19,7 +19,7 @@
         }
       </div>
       <div class="my-2 order-4">
-        @if (isFavorite(book, favoriteIds!)) {
+        @if (isFavorite(book)) {
         <button hlmBtn variant="destructive" (click)="removeFavorite(book)">
           <ng-icon hlm size="sm" class="mr-2" name="lucideHeartCrack" />
           Remove from favorites

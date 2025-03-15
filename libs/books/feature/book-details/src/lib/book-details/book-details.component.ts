@@ -36,10 +36,8 @@ export class BookDetailsComponent {
   readonly book$ = this.bookFacade.currentBook$;
   readonly bookDescription$ = this.bookFacade.currentBookDescription$;
 
-  readonly favoriteIds$ = this.userFacade.favoriteIds$;
-
-  isFavorite(book: Book, favoriteIds: string[]): boolean {
-    return this.userFacade.isFavorite(book, favoriteIds);
+  isFavorite(book: Book): boolean {
+    return this.userFacade.isFavorite(book);
   }
 
   addFavorite(book: Book): void {

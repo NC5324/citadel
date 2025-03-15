@@ -1,5 +1,4 @@
-@let books = books$ | async; @let hasMore = hasMore$ | async; @let favoriteIds =
-favoriteIds$ | async;
+@let books = books$ | async; @let hasMore = hasMore$ | async;
 <div class="w-full h-full flex flex-col">
   <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mt-2">
     @for (book of books; track book.key) {
@@ -12,7 +11,7 @@ favoriteIds$ | async;
       [actionsTemplate]="actionsTemplate"
     >
       <ng-template #actionsTemplate>
-        @if (isFavorite(book, favoriteIds!)) {
+        @if (isFavorite(book)) {
         <button hlmBtn variant="destructive" (click)="removeFavorite(book)">
           <ng-icon hlm size="sm" class="mr-2" name="lucideHeartCrack" />
           Remove from favorites

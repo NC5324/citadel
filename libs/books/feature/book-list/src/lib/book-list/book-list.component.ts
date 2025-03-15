@@ -32,14 +32,13 @@ export class BookListComponent {
 
   readonly books$ = this.bookFacade.books$;
   readonly hasMore$ = this.bookFacade.hasMore$;
-  readonly favoriteIds$ = this.userFacade.favoriteIds$;
 
   tags(book: Book): string[] {
     return this.bookFacade.tags(book);
   }
 
-  isFavorite(book: Book, favoriteIds: string[]): boolean {
-    return this.userFacade.isFavorite(book, favoriteIds);
+  isFavorite(book: Book): boolean {
+    return this.userFacade.isFavorite(book);
   }
 
   addFavorite(book: Book): void {

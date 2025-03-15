@@ -29,14 +29,13 @@ export class FavoriteListComponent {
   private readonly userFacade = inject(UserFacade);
 
   readonly books$ = this.userFacade.favorites$;
-  readonly favoriteIds$ = this.userFacade.favoriteIds$;
 
   tags(book: Book): string[] {
     return this.bookFacade.tags(book);
   }
 
-  isFavorite(book: Book, favoriteIds: string[]): boolean {
-    return this.userFacade.isFavorite(book, favoriteIds);
+  isFavorite(book: Book): boolean {
+    return this.userFacade.isFavorite(book);
   }
 
   addFavorite(book: Book): void {
