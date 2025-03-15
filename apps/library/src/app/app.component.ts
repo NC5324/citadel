@@ -17,6 +17,7 @@ import { map, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
 import { SearchComponent } from '@citadel/search';
 import { SearchService } from './services/search.service';
+import { AuthFacade } from '@citadel/auth/data-access';
 
 @Component({
   imports: [
@@ -45,15 +46,12 @@ import { SearchService } from './services/search.service';
 export class AppComponent {
   readonly title = 'Citadel';
 
-  readonly store = inject(Store);
   readonly router = inject(Router);
   readonly themeService = inject(ThemeService);
   readonly searchService = inject(SearchService);
+  private readonly authFacade = inject(AuthFacade);
 
-  readonly authenticated$ = of(false);
-  // this.store
-    // .select(userFeature.selectUser)
-    // .pipe(map((user) => !!user));
+  readonly authenticated$ = this.authFacade.authenticated$;
 
   search(): void {
     this.searchService.search();
@@ -67,7 +65,6 @@ export class AppComponent {
   }
 
   logout(): void {
-    // this.store.dispatch(UserActions.resetUser());
-    this.router.navigate(['/']);
+    this.authFacade.logout();
   }
 }

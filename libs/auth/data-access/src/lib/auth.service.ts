@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { User } from "@citadel/user/data-access";
-import { Observable, of } from "rxjs";
+import { EMPTY, noop, Observable, of } from "rxjs";
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -28,6 +28,7 @@ export class AuthService {
 	}
 
 	logout$(): Observable<void> {
-		return this.http.get<void>(`/api/auth/logout`);
+		return of(noop());
+		// return this.http.get<void>(`/api/auth/logout`);
 	}
 }
