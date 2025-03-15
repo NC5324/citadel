@@ -18,6 +18,9 @@
       "@citadel/auth/data-access": ["libs/auth/data-access/src/index.ts"],
       "@citadel/book-details": ["libs/books/feature/book-details/src/index.ts"],
       "@citadel/book-list": ["libs/books/feature/book-list/src/index.ts"],
+      "@citadel/book-list-element": [
+        "libs/books/ui/book-list-element/src/index.ts"
+      ],
       "@citadel/books/data-access": ["libs/books/data-access/src/index.ts"],
       "@citadel/favorite-list": [
         "libs/user/feature/favorite-list/src/index.ts"

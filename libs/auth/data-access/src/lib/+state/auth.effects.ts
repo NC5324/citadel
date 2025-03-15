@@ -1,9 +1,9 @@
 import { inject, Injectable } from "@angular/core";
-import { UserActions } from "libs/user/data-access/src/lib/+state/user.store";
 import { exhaustMap, map, catchError, EMPTY } from "rxjs";
 import { AuthActions } from "./auth.store";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthService } from "../auth.service";
+import { UserActions } from "@citadel/user/data-access";
 
 @Injectable()
 export class AuthEffects {

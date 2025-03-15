@@ -1,1 +1,33 @@
-<p>Login works!</p>
+<section [formGroup]="form" hlmCard class="m-auto flex flex-col">
+  <header hlmCardHeader class="p-4 text-xl">
+    <h3 hlmCardTitle>Login</h3>
+  </header>
+  <section hlmCardContent class="space-y-4 px-4">
+    <input hlmInput placeholder="Username" formControlName="username" />
+    <input
+      hlmInput
+      placeholder="Password"
+      type="password"
+      formControlName="password"
+    />
+  </section>
+  <footer hlmCardFooter class="flex space-x-2 mt-4 p-4 pt-0">
+    <button
+      hlmBtn
+      class="flex-grow"
+      variant="secondary"
+      [disabled]="form.invalid"
+      (click)="login()"
+    >
+      Submit
+    </button>
+    <button
+      hlmBtn
+      class="flex-grow"
+      variant="secondary"
+      (click)="navigateToSignup()"
+    >
+      Signup
+    </button>
+  </footer>
+</section>

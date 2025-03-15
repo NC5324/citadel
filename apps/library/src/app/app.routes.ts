@@ -5,19 +5,18 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { inject } from '@angular/core';
-import { Store } from '@ngrx/store';
 import { map } from 'rxjs';
-import { userFeature } from './user/store/user.feature';
+import { AuthFacade } from '@citadel/auth/data-access';
 
 const authGuard = (
   route: ActivatedRouteSnapshot,
   state: RouterStateSnapshot
 ) => {
-  const store = inject(Store);
   const router = inject(Router);
-  return store.select(userFeature.selectUser).pipe(
-    map((user) => {
-      if (!user) {
+  const authFacade = inject(AuthFacade);
+  return authFacade.authenticated$.pipe(
+    map((authenticated) => {
+      if (!authenticated) {
         router.navigateByUrl('/auth/login', {
           state: { returnUrl: state.url },
         });

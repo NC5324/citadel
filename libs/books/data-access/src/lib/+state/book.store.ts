@@ -5,14 +5,14 @@ import {
   on,
   props,
 } from '@ngrx/store';
-import { Book } from '@citadel/books/data-access';
+import { Book } from '../models/book.interface';
 
 interface State {
   books: Book[];
   hasMore: boolean;
   page: number;
   pageSize: number;
-  selectedBookId: string | undefined;
+  selectedBook: Book | null;
 }
 
 const initialState: State = {
@@ -20,11 +20,11 @@ const initialState: State = {
   hasMore: true,
   page: 1,
   pageSize: 16,
-  selectedBookId: undefined,
+  selectedBook: null,
 };
 
 export const BooksActions = createActionGroup({
-  source: 'Books',
+  source: 'books',
   events: {
     search: props<{ query: string }>(),
     searchSuccess: props<{ books: Book[]; page: number; hasMore: boolean }>(),

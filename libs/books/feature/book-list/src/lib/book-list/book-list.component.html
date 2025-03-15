@@ -1,1 +1,50 @@
-<p>BookList works!</p>
+@let books = books$ | async; @let hasMore = hasMore$ | async; @let favoriteIds =
+favoriteIds$ | async;
+<div class="w-full h-full flex flex-col">
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mt-2">
+    @for (book of books; track book.key) {
+    <lib-book-list-element
+      [title]="book.title"
+      [publishYear]="9999"
+      [authorLabel]="'Lorem ipsum dolor sit amet'"
+      [coverId]="book.cover_i"
+      [tags]="tags(book)"
+      [actionsTemplate]="actionsTemplate"
+    >
+      <ng-template #actionsTemplate>
+        @if (isFavorite(book, favoriteIds!)) {
+        <button hlmBtn variant="destructive" (click)="removeFavorite(book)">
+          <ng-icon hlm size="sm" class="mr-2" name="lucideHeartCrack" />
+          Remove from favorites
+        </button>
+        } @else {
+        <button hlmBtn variant="destructive" (click)="addFavorite(book)">
+          <ng-icon hlm size="sm" class="mr-2" name="lucideHeart" />
+          Add to favorites
+        </button>
+        }
+        <button
+          hlmBtn
+          variant="secondary"
+          [routerLink]="['/', 'books', book.key.split('/')[2]]"
+        >
+          <ng-icon hlm size="sm" class="mr-2" name="lucideEye" />
+          View details
+        </button>
+      </ng-template>
+    </lib-book-list-element>
+    } @empty {
+    <div
+      class="w-screen h-[calc(100vh-100px)] flex flex-col gap-4 items-center justify-center text-3xl"
+    >
+      This page is empty
+      <button hlmBtn routerLink="/">Return home</button>
+    </div>
+    }
+  </div>
+  @if (books?.length && hasMore) {
+  <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2 mt-2">
+    <button hlmBtn class="mb-2" (click)="showMore()">Show more</button>
+  </div>
+  }
+</div>

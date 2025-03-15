@@ -1,1 +1,44 @@
-<p>Signup works!</p>
+<section [formGroup]="form" hlmCard class="m-auto flex flex-col">
+  <header hlmCardHeader class="p-4 text-xl">
+    <h3 hlmCardTitle>Signup</h3>
+  </header>
+  <section hlmCardContent class="space-y-4 px-4">
+    <input hlmInput placeholder="Username" formControlName="username" />
+    <hlm-form-field>
+      <input
+        hlmInput
+        placeholder="Password"
+        type="password"
+        formControlName="password"
+      />
+    </hlm-form-field>
+    <hlm-form-field>
+      <input
+        hlmInput
+        placeholder="Confirm password"
+        type="password"
+        formControlName="confirmPassword"
+      />
+      <hlm-error>Password does not match</hlm-error>
+    </hlm-form-field>
+  </section>
+  <footer hlmCardFooter class="flex space-x-2 mt-4 p-4 pt-0">
+    <button
+      hlmBtn
+      class="flex-grow"
+      variant="secondary"
+      [disabled]="form.invalid"
+      (click)="signup()"
+    >
+      Submit
+    </button>
+    <button
+      hlmBtn
+      class="flex-grow"
+      variant="secondary"
+      routerLink="/auth/login"
+    >
+      Login
+    </button>
+  </footer>
+</section>
