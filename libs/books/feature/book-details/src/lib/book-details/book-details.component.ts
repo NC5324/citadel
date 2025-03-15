@@ -9,6 +9,7 @@ import { HlmCardDirective, HlmCardHeaderDirective, HlmCardDescriptionDirective }
 import { HlmIconDirective } from '@spartan-ng/ui-icon-helm';
 import { RouterModule } from '@angular/router';
 import { UserFacade } from '@citadel/user/data-access';
+import { filter, Observable } from 'rxjs';
 
 @Component({
   selector: 'lib-book-details',

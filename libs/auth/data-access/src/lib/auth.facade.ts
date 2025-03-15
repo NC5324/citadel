@@ -28,5 +28,4 @@ export class AuthFacade {
   logout(): void {
     this.store.dispatch(AuthActions.logout());
   }
-
 }

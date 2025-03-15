@@ -30,6 +30,8 @@ export const BooksActions = createActionGroup({
     searchSuccess: props<{ books: Book[]; page: number; hasMore: boolean }>(),
     showMore: props<{ query: string }>(),
     showMoreSuccess: props<{ books: Book[]; page: number; hasMore: boolean }>(),
+    selectBook: props<{ id: string }>(),
+    loadBookSuccess: props<{ book: Book }>(),
   },
 });
 
@@ -39,6 +41,7 @@ export const booksFeature = createFeature({
     initialState,
     on(BooksActions.searchSuccess, (state, { books, hasMore, page }) => ({
       ...state,
+      selectedBook: null,
       books,
       hasMore,
       page,
@@ -48,6 +51,10 @@ export const booksFeature = createFeature({
       books: state.books.concat(books),
       hasMore,
       page,
-    }))
+    })),
+    on(BooksActions.loadBookSuccess, (state, { book }) => ({
+      ...state,
+      selectedBook: book,
+    })),
   ),
 });

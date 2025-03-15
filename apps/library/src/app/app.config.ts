@@ -12,19 +12,18 @@ import { provideHttpClient } from '@angular/common/http';
 import { UserEffects, userFeature } from '@citadel/user/data-access';
 import { booksFeature, BookEffects } from '@citadel/books/data-access';
 import { AuthEffects } from '@citadel/auth/data-access';
+import { provideRouterStore, routerReducer } from '@ngrx/router-store';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideStore(),
-    provideStoreDevtools({ logOnly: !isDevMode() }),
-    provideEffects(),
-    provideState(userFeature),
-    provideState(booksFeature),
-    provideEffects(AuthEffects),
-    provideEffects(UserEffects),
-    provideEffects(BookEffects),
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(appRoutes),
     provideHttpClient(),
+    provideStore({ router: routerReducer }),
+    provideRouterStore(),
+    provideStoreDevtools({ logOnly: !isDevMode() }),
+    provideEffects(AuthEffects, UserEffects, BookEffects),
+    provideState(userFeature),
+    provideState(booksFeature),
   ],
 };

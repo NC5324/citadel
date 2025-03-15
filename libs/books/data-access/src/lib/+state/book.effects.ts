@@ -2,15 +2,33 @@ import { Injectable, inject } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { concatLatestFrom } from '@ngrx/operators';
 import { Store } from '@ngrx/store';
-import { switchMap, map, catchError, EMPTY } from 'rxjs';
+import { switchMap, map, catchError, EMPTY, filter } from 'rxjs';
 import { BooksService } from '../book.service';
 import { BooksActions, booksFeature } from './book.store';
+import { routerNavigatedAction } from '@ngrx/router-store';
 
 @Injectable()
 export class BookEffects {
   private readonly actions$ = inject(Actions);
   private readonly booksService = inject(BooksService);
   private readonly store = inject(Store);
+
+  loadSelectedBook$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(routerNavigatedAction),
+      filter(({ payload }) => payload.event.url.startsWith('/books/')),
+      map(({ payload }) => payload.event.url.split('/')[2]),
+      switchMap((id) =>
+        this.booksService.loadBook$(id).pipe(
+          map((book) => BooksActions.loadBookSuccess({ book })),
+          catchError((err) => {
+            console.error(err);
+            return EMPTY;
+          }),
+        ),
+      )
+    );
+  });
 
   loadSearchResults$ = createEffect(() => {
     return this.actions$.pipe(

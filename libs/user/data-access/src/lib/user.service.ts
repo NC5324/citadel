@@ -1,23 +1,23 @@
-import { HttpClient } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
-import { Observable } from "rxjs";
-import { User } from "./models/user.interface";
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { User } from './models/user.interface';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+  private readonly http = inject(HttpClient);
 
-    private readonly http = inject(HttpClient);
+  loadCurrentUser$(): Observable<User> {
+    return this.http.get<User>(`/api/current-user`);
+  }
 
-    loadCurrentUser$(): Observable<User> {
-        return this.http.get<User>(`/api/current-user`);
-    }
+  addFavorite$(userId: number, bookId: string): Observable<string[]> {
+    return of([bookId]);
+    // return this.http.post<string[]>(`/api/user/${userId}/favorites/add`, { bookId });
+  }
 
-    addFavorite$(userId: number, bookId: string): Observable<string[]> {
-        return this.http.post<string[]>(`/api/user/${userId}/favorites/add`, { bookId });
-    }
-
-    removeFavorite$(userId: number, bookId: string): Observable<string[]> {
-        return this.http.post<string[]>(`/api/user/${userId}/favorites/remove`, { bookId });
-    }
-
+  removeFavorite$(userId: number, bookId: string): Observable<string[]> {
+    return of([bookId]);
+    // return this.http.post<string[]>(`/api/user/${userId}/favorites/remove`, { bookId });
+  }
 }
