@@ -15,8 +15,17 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@citadel/books": ["libs/books/src/index.ts"],
+      "@citadel/auth/data-access": ["libs/auth/data-access/src/index.ts"],
+      "@citadel/book-details": ["libs/books/feature/book-details/src/index.ts"],
+      "@citadel/book-list": ["libs/books/feature/book-list/src/index.ts"],
+      "@citadel/books/data-access": ["libs/books/data-access/src/index.ts"],
+      "@citadel/favorite-list": [
+        "libs/user/feature/favorite-list/src/index.ts"
+      ],
+      "@citadel/login": ["libs/auth/feature/login/src/index.ts"],
       "@citadel/search": ["libs/shared/ui/search/src/index.ts"],
+      "@citadel/signup": ["libs/auth/feature/signup/src/index.ts"],
+      "@citadel/user/data-access": ["libs/user/data-access/src/index.ts"],
       "@spartan-ng/ui-badge-helm": [
         "libs/shared/ui/ui-badge-helm/src/index.ts"
       ],

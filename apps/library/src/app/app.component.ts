@@ -13,10 +13,8 @@ import {
   lucideSun,
 } from '@ng-icons/lucide';
 import { Store } from '@ngrx/store';
-import { userFeature } from './user/store/user.feature';
-import { map } from 'rxjs';
+import { map, of } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
-import { UserActions } from './user/store/user.actions';
 import { SearchComponent } from '@citadel/search';
 import { SearchService } from './services/search.service';
 
@@ -52,9 +50,10 @@ export class AppComponent {
   readonly themeService = inject(ThemeService);
   readonly searchService = inject(SearchService);
 
-  readonly authenticated$ = this.store
-    .select(userFeature.selectUser)
-    .pipe(map((user) => !!user));
+  readonly authenticated$ = of(false);
+  // this.store
+    // .select(userFeature.selectUser)
+    // .pipe(map((user) => !!user));
 
   search(): void {
     this.searchService.search();
@@ -68,7 +67,7 @@ export class AppComponent {
   }
 
   logout(): void {
-    this.store.dispatch(UserActions.resetUser());
+    // this.store.dispatch(UserActions.resetUser());
     this.router.navigate(['/']);
   }
 }
